@@ -453,11 +453,6 @@ def _preintegrate_measurement(R, p, v, gyr, a, dt):
     pd = p + v * dt + dp_w + gdt22
     return Rd, pd, vd
 
-
-
-def geodesic(w0, w1, p0, p1, b):
-    return np.sqrt(b * np.linalg.norm(w0 - w1) ** 2 + np.linalg.norm(p0 - p1) ** 2)
-
 @jit(nopython=True)
 def se3_inv(T):
     T_inv = np.eye(4)
@@ -1030,17 +1025,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_list', type=str, default='lists/list_train.txt')
     parser.add_argument('--val_list', type=str, default="lists/list_val.txt")
-    parser.add_argument('--test_list', type=str, default="lists/list_single_seq.txt")
+    parser.add_argument('--test_list', type=str, default="lists/list_test_unseen.txt")
     parser.add_argument('--test_path', type=str, default=None)
-    parser.add_argument('--root_dir', type=str, default="/home/royinakj/ronin_data/all_data", help='Path to data directory')
-    parser.add_argument('--cache_path', type=str, default="ev_data/resnet_train_cache_ev_bth1_v05_v3", help='Path to cache folder to store processed data')
+    parser.add_argument('--root_dir', type=str, default="../ronin_data/all_data", help='Path to data directory')
+    parser.add_argument('--cache_path', type=str, default="ev_data/ronin_ev_se3p", help='Path to cache folder to store processed data')
     parser.add_argument('--dataset', type=str, default='ronin', choices=['ronin', 'ridi'])
     parser.add_argument('--max_ori_error', type=float, default=20.0)
     parser.add_argument('--step_size', type=int, default=10)
     parser.add_argument('--window_size', type=int, default=200)
-    parser.add_argument('--mode', type=str, default='train', choices=['train', 'test'])
+    parser.add_argument('--mode', type=str, default='test', choices=['train', 'test'])
     parser.add_argument('--lr', type=float, default=1e-04)
-    parser.add_argument('--batch_size', type=int, default=128)
+    parser.add_argument('--batch_size', type=int, default=1)
     parser.add_argument('--epochs', type=int, default=120)
     parser.add_argument('--arch', type=str, default='resnet18')#resnet18
     parser.add_argument('--cpu', action='store_true')
@@ -1049,13 +1044,13 @@ if __name__ == '__main__':
     parser.add_argument('--show_plot', action='store_true')
 
     parser.add_argument('--continue_from', type=str, default=None)
-    parser.add_argument('--out_dir', type=str, default="ev_data/test")
-    parser.add_argument('--model_path', type=str, default=None)
+    parser.add_argument('--out_dir', type=str, default="ev_output/ronin_ev_se3p/test_ronin_unseen")
+    parser.add_argument('--model_path', type=str, default="ev_output/ronin_ev_se3p/checkpoints/checkpoint_last.pt")
     parser.add_argument('--feature_sigma', type=float, default=0.00001)
     parser.add_argument('--target_sigma', type=float, default=0.00001)
     parser.add_argument('--contrast_threshold', type=float, default= 0.1) ## contrast threshold for event generation
-    parser.add_argument('--add_vel_perturb_range', type=float, default = 0.5) ## noise for training on gt_velocity
-    parser.add_argument('--polarity_noise_range', type=float, default = 0.5) ## noise for training on gt_polarity
+    parser.add_argument('--add_vel_perturb_range', type=float, default = 0.0) ## noise for training on gt_velocity
+    parser.add_argument('--polarity_noise_range', type=float, default = 0.0) ## noise for training on gt_polarity
     parser.add_argument('--data_split_percentage', type=float, default=1.0) # 0.6 to use 30% training data (available is 50% data)
     # 0.4 for 20% training data
     args = parser.parse_args()

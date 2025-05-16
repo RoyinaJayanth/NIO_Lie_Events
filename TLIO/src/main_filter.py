@@ -48,10 +48,10 @@ if __name__ == "__main__":
         "--root_dir", type=str, 
         default="../TLIO-master/local_data/tlio_golden", help="Path to data directory"
     )
-    io_groups.add_argument("--dataset_number", type=int, default=None) # default=None #default = 27 # 0-35 for TLIO dataset
-    io_groups.add_argument("--model_path", type=str, default="../TLIO-master/output/se3_awp_bth01_v05_fl_mask_p05_new/checkpoint_best.pt")
-    io_groups.add_argument("--model_param_path", type=str, default="../TLIO-master/output/se3_awp_bth01_v05_fl_mask_p05_new/parameters.json") #, required=True
-    io_groups.add_argument("--out_dir", type=str, default="../TLIO-master/output/test")#All_Aria_ekf_test_w_i
+    io_groups.add_argument("--dataset_number", type=int, default=None)
+    io_groups.add_argument("--model_path", type=str, default="../TLIO-master/output/tlio_ev_se3p/checkpoint_best.pt")
+    io_groups.add_argument("--model_param_path", type=str, default="../TLIO-master/output/tlio_ev_se3p/parameters.json") #, required=True
+    io_groups.add_argument("--out_dir", type=str, default="../TLIO-master/output/tlio_ev_se3p/ekf_output")
     io_groups.add_argument("--out_filename", type=str, default="not_vio_state.txt")
     io_groups.add_argument("--save_as_npy", action="store_true")
     io_groups.add_argument("--sim_data_path", type=str, default="imu-sim.txt")
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     # ----------------------- network params -----------------------
     net_groups = parser.add_argument_group("network")
     net_groups.add_argument("--cpu", action="store_true")
-    add_bool_arg(net_groups, "initial_velocity_debug", default=False)
+    add_bool_arg(net_groups, "initial_velocity_debug", default=False) ## this is to debug event generation
     add_bool_arg(net_groups, "event_based_input", default=True)
     add_bool_arg(net_groups, "base_event_stack", default=False)
     add_bool_arg(net_groups, "geodesic_event", default=False)

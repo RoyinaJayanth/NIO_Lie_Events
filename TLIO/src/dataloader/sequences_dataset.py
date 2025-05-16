@@ -24,6 +24,34 @@ import math
 
 
 
+@jit(nopython=True)
+def vee(w_x):
+    return np.array([w_x[2, 1], w_x[0, 2], w_x[1, 0]])
+
+
+
+@jit(nopython=True)
+def mat_exp(omega):
+    if len(omega) != 3:
+        raise ValueError("tangent vector must have length 3")
+
+    def hat(v):
+        v = v.flatten()
+        R = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]])
+        return R
+
+    angle = np.linalg.norm(omega)
+
+    # Near phi==0, use first order Taylor expansion
+    if angle < 1e-10:
+        return np.identity(3) + hat(omega)
+
+    axis = omega / angle
+    s = np.sin(angle)
+    c = np.cos(angle)
+
+    return c * np.identity(3) + (1 - c) * np.outer(axis, axis) + s * hat(axis)
+
 
 @jit(nopython=True)
 def sinc_robust(x):
@@ -31,6 +59,34 @@ def sinc_robust(x):
         return 1
     else:
         return np.sin(x) / x
+
+
+@jit(nopython=True)
+def mat_log(R):
+    x = 0.5 * (np.trace(R) - 1)  # np.clip(0.5*(np.trace(R) - 1), -1, 1)
+    if x > 1:
+        x = 1
+    elif x < -1:
+        x = -1
+    theta = np.arccos(x)  # - 1e-14
+    if np.abs(theta - np.pi) < 1e-3:
+        return np.zeros((3,))
+    omega = vee(R - R.T) * 0.5 / sinc_robust(theta)
+    return omega
+
+
+
+@jit(nopython=True)
+def exp_SE3(v):
+    """
+    Aligns with the Sophus convention of the 6x1 v being
+    in the block order: [log(translation) log(rotation)]
+    """
+    Exp = np.eye(4)
+    Exp[:3, :3] = mat_exp(v[3:])
+    Exp[:3, 3:4] = Jl_SO3(v[3:]) @ v[:3, None]
+    return Exp
+
 
 
 @jit(nopython=True)

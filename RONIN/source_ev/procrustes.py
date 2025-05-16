@@ -46,8 +46,7 @@ def similarity_transform(from_points, to_points):
     
     return c*R, t
 
-# dir_path = '/home/royinakj/ronin/output/ronin_original'+'/test_ridi_test_dist'
-dir_path = '/home/royinakj/ronin/ev_data/test_resnet_bth1_v05/pred_vel_ckptlast_ronin_unseen'
+dir_path = '/home/royinakj/ronin/ev_data/ronin_ev_se3p/test_ridi_test_dist'
 
 ate_all,rte_all = [],[]
 pred_per_min = 200 * 60

@@ -188,7 +188,7 @@ if __name__ == "__main__":
         action='append',  # Allows multiple uses of the argument
         # required=True,
         help="A file to process (can be used multiple times)",
-        default=['/home/royinakj/TLIO-master/output/resnet_tlio_local_gravity_aligned_50epochs/ekf_output']
+        default=['/home/royinakj/TLIO-master/output/tlio_ev_se3p/ekf_output']
     )
     parser.add_argument("--ground_truth_path", type=str, default="/home/royinakj/TLIO-master/local_data/tlio_golden/")
     parser.add_argument("--output_file_name", type=str, default="tlio_aug")

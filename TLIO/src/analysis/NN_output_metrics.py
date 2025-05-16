@@ -97,7 +97,7 @@ if __name__ == "__main__":
         action='append',  # Allows multiple uses of the argument
         # required=True,
         help="A file to process (can be used multiple times)",
-        default=['/home/royinakj/TLIO-master/output/eq_frame_2scalars_so2_2vec/aria_test']
+        default=['/home/royinakj/TLIO-master/output/tlio_ev_se3p/nn_test']
     )
     # parser.add_argument("--test_seq_list", type=str, default="test_list.txt")
     parser.add_argument("--output_file_name", type=str, default="tlio_aug")

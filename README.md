@@ -54,6 +54,8 @@ Next commands should be run from this environment.
 
 We provide the math utils (`General/utils_tlio`) needed and event generation functions (`General/Event_generation.py`) that can be directly called for $SE(3)$, $SO(3)$ and $R(3)$ in the General folder in this repository.
 
+---
+
 ## TLIO Architecture
 
 original work: [website](https://cathias.github.io/TLIO/)
@@ -99,6 +101,10 @@ Attitude filter data is not included with the release.
 2. Aria Dataset: [Download Here](https://www.projectaria.com/datasets/aea/)
 
 ### Pretrained Models
+1. TLIO + events ($SE(3)$ + polarity): [Download Here]()
+2. TLIO + events ($SE(3)$): [Download Here]()
+3. TLIO + events ($SO(3)$ and $R(3)$): [Download Here]()
+4. TLIO + events ($R(3)$): [Download Here]()
 
 
 ### Training and Testing 
@@ -162,7 +168,7 @@ We show the benefits of our framework applied to this end-to-end Neural Network 
 3. OXOID Dataset: [Download Here](http://deepio.cs.ox.ac.uk/)
 
 ### Pretrained Models
-
+1. RoNIN + Events ($SE(3)$ + polarity): [Download Here]()
 
 ### Training and Testing
 

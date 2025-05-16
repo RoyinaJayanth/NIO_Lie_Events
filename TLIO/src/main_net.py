@@ -20,7 +20,7 @@ import os
 import numpy as np
 
 
-def seed_everything(seed=42):#42
+def seed_everything(seed=42):
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
     np.random.seed(seed)
@@ -45,10 +45,10 @@ if __name__ == "__main__":
     #parser.add_argument("--test_list", type=str, default=None) 
     parser.add_argument(
         "--root_dir", type=str, 
-        default="../TLIO-master/local_data/tlio_golden", help="Path to data directory"# /home/royinakj/aria_data/imu_right_1kHz /mnt/kostas-graid/datasets/royinakj/TLIO_events ../TLIO-master/local_data/tlio_golden
+        default="../TLIO-master/local_data/tlio_golden", help="Path to data directory"
     )#/mnt/kostas-graid/datasets/royinakj/TLIO_events
-    parser.add_argument("--out_dir", type=str, default="../TLIO-master/output/test")
-    parser.add_argument("--model_path", type=str, default="../TLIO-master/output/se3_awp_bth01_v05_fl_mask_p05_new/checkpoint_best.pt")#"../TLIO-master/output/resnet_tlio_local_gravity_aligned_50epochs/checkpoint_best.pt"
+    parser.add_argument("--out_dir", type=str, default="../TLIO-master/output/tlio_ev_se3p/nn_test")
+    parser.add_argument("--model_path", type=str, default="../TLIO-master/output/tlio_ev_se3p/checkpoint_best.pt")
     parser.add_argument("--continue_from", type=str, default=None)
     parser.add_argument("--out_name", type=str, default=None)
     parser.add_argument(
@@ -58,13 +58,13 @@ if __name__ == "__main__":
 
 
     # ------------------ architecture and training -----------------
-    parser.add_argument("--lr", type=float, default=1e-04) #1e-04 -- for rnin-vio and tlio, 1e-05 -- for euroc?
+    parser.add_argument("--lr", type=float, default=1e-04) 
     parser.add_argument("--batch_size", type=int, default=1024) #1024 --originally
     parser.add_argument("--epochs", type=int, default=3, help="max num epochs")
 
-    parser.add_argument("--arch", type=str, default="resnet") #, resnet, resnet_wo_flatten, resnet_ap
+    parser.add_argument("--arch", type=str, default="resnet") 
     parser.add_argument("--cpu", action="store_true")
-    parser.add_argument("--input_dim", type=int, default=12)
+    parser.add_argument("--input_dim", type=int, default=12)# 6 if not using polarity and imu meas as input
     parser.add_argument("--output_dim", type=int, default=3)
     parser.add_argument("-j", "--workers", type=int, default=10)
     parser.add_argument("--dataset_style", type=str, default="mmap", 
@@ -95,7 +95,7 @@ if __name__ == "__main__":
     add_bool_arg(parser, "reflection_yaw_augmentation", default=False) 
     add_bool_arg(parser, "fixed_validation_set", default=True)
     parser.add_argument("--interp_freq",type=float, default=200.0)
-    add_bool_arg(parser, "event_based_input", default=False)
+    add_bool_arg(parser, "event_based_input", default=True)
     add_bool_arg(parser, "test_interpolate", default=False) 
     add_bool_arg(parser,"base_event_stack", default=False)
     add_bool_arg(parser,"geodesic_event",default=False)
@@ -109,14 +109,14 @@ if __name__ == "__main__":
     add_bool_arg(parser,"add_vel_perturb",default=False)
     parser.add_argument("--add_vel_perturb_range",type=float, default=0.0) #add_vel_perturb default 0.2
 
-    add_bool_arg(parser,"se3_events",default=False)
+    add_bool_arg(parser,"se3_events",default=True)
 
     add_bool_arg(parser,"noise_before_event_gen",default=False) #noise_before_event_gen
     add_bool_arg(parser,"gravity_noise_before_event_gen",default=False)
     add_bool_arg(parser,"init_vel_noise_sens",default=False)
 
     #polarity_input
-    add_bool_arg(parser,"polarity_input",default=False)
+    add_bool_arg(parser,"polarity_input",default=True)
     add_bool_arg(parser,"only_polarity_input",default=False)
     ## only while training - polarity_noise_range
     parser.add_argument("--polarity_noise_range",type=float, default=0.0)
@@ -139,11 +139,11 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
 
-    run =   wandb.init(
-    # Set the project where this run will be logged
-    project="eqnio_22Aug", config=args.__dict__, id=args.out_dir.split('/')[-1], resume="allow"
-    # Track hyperparameters and run metadata
-)
+#     run =   wandb.init(
+#     # Set the project where this run will be logged
+#     project="lie_events", config=args.__dict__, id=args.out_dir.split('/')[-1], resume="allow"
+#     # Track hyperparameters and run metadata
+# )
 
     ###########################################################
     # Main
