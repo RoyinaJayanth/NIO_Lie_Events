@@ -1,7 +1,7 @@
 # Neural Inertial Odometry from Lie Events (RSS 2025)
 
-![Teaser](images/Picture_overview)
-**Figure: Neural Inerial Odometry from Lie Events. We train Neural Displacement Priors (NDPs), which enable low-drift inertial odometry, with \emph{Lie Events} derived from acceleration $\boldsymbol{a}(t_i)$ and angular rate $\boldsymbol{\omega}(t_i)$ measurements from an Inertial Measurement Unit (IMU). These events enhance the robustness of NDPs due to their favorable properties under varying sampling rates and trajectory profiles. To generate these events, we produce pre-integrations $\mathbf{x}(t)$ which reside in the special Euclidean group $SE(3)$ and then perform level-crossing on this signal which prompts the generalization of level-crossing and event polarities (red and blue arrows) to higher dimensional manifolds..**
+![Teaser](images/Picture_overview.png)
+**Figure: Neural Inerial Odometry from Lie Events. We train Neural Displacement Priors (NDPs), which enable low-drift inertial odometry, with Lie Events derived from acceleration $\boldsymbol{a}(t_i)$ and angular rate $\boldsymbol{\omega}(t_i)$ measurements from an Inertial Measurement Unit (IMU). These events enhance the robustness of NDPs due to their favorable properties under varying sampling rates and trajectory profiles. To generate these events, we produce pre-integrations $\mathbf{x}(t)$ which reside in the special Euclidean group $SE(3)$ and then perform level-crossing on this signal which prompts the generalization of level-crossing and event polarities (red and blue arrows) to higher dimensional manifolds..**
 
 
 
