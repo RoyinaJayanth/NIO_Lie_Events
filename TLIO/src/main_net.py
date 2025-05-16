@@ -45,15 +45,15 @@ if __name__ == "__main__":
     #parser.add_argument("--test_list", type=str, default=None) 
     parser.add_argument(
         "--root_dir", type=str, 
-        default="../TLIO-master/local_data/tlio_golden", help="Path to data directory"
+        default="local_data/tlio_golden", help="Path to data directory"
     )#/mnt/kostas-graid/datasets/royinakj/TLIO_events
-    parser.add_argument("--out_dir", type=str, default="../TLIO-master/output/tlio_ev_se3p/nn_test")
-    parser.add_argument("--model_path", type=str, default="../TLIO-master/output/tlio_ev_se3p/checkpoint_best.pt")
+    parser.add_argument("--out_dir", type=str, default="models/tlio_ev_se3p/nn_test")
+    parser.add_argument("--model_path", type=str, default="models/checkpoint_best.pt")
     parser.add_argument("--continue_from", type=str, default=None)
     parser.add_argument("--out_name", type=str, default=None)
     parser.add_argument(
         "--test_list", type=str, 
-        default="test_list_original.txt", help="Path to test list" 
+        default="test_list.txt", help="Path to test list" 
     )
 
 

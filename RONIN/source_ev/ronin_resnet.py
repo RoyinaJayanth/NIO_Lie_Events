@@ -1027,7 +1027,7 @@ if __name__ == '__main__':
     parser.add_argument('--val_list', type=str, default="lists/list_val.txt")
     parser.add_argument('--test_list', type=str, default="lists/list_test_unseen.txt")
     parser.add_argument('--test_path', type=str, default=None)
-    parser.add_argument('--root_dir', type=str, default="../ronin_data/all_data", help='Path to data directory')
+    parser.add_argument('--root_dir', type=str, default="ronin_data/all_data", help='Path to data directory')
     parser.add_argument('--cache_path', type=str, default="ev_data/ronin_ev_se3p", help='Path to cache folder to store processed data')
     parser.add_argument('--dataset', type=str, default='ronin', choices=['ronin', 'ridi'])
     parser.add_argument('--max_ori_error', type=float, default=20.0)

@@ -101,10 +101,10 @@ Attitude filter data is not included with the release.
 2. Aria Dataset: [Download Here](https://www.projectaria.com/datasets/aea/)
 
 ### Pretrained Models
-1. TLIO + events ($SE(3)$ + polarity): [Download Here]()
-2. TLIO + events ($SE(3)$): [Download Here]()
-3. TLIO + events ($SO(3)$ and $R(3)$): [Download Here]()
-4. TLIO + events ($R(3)$): [Download Here]()
+1. TLIO + events ( $SE(3)$ + polarity): [Download Here]()
+2. TLIO + events ( $SE(3)$ ): [Download Here]()
+3. TLIO + events ( $SO(3)$ and $R(3)$ ): [Download Here]()
+4. TLIO + events ( $R(3)$ ): [Download Here]()
 
 
 ### Training and Testing 
@@ -112,45 +112,67 @@ Attitude filter data is not included with the release.
 (Optional) Download the dataset and the pre-trained models. 
 To train and test NN run ```TLIO-master/src/main_net.py``` with mode argument. Please refer to the source code for the full list of command line arguments. 
 
-<!-- ```bash
+```bash
 python3 TLIO-master/src/main_net.py --mode train \
                                     --root_dir local_data/tlio_golden \
-                                    --out_dir models/tlio_o2 \
+                                    --out_dir models/tlio_ev_se3p \
                                     --batch_size 1024 \
                                     --epochs 50 \
-                                    --arch eq_o2_frame_fullCov_2vec_2deep
+                                    --arch resnet \
+                                    --input_dim 12 \
+                                    --do_bias_shift \
+                                    --perturb_gravity \
+                                    --yaw_augmentation \
+                                    --event_based_input \
+                                    --contrast_threshold 0.01 \
+                                    --add_vel_perturb \
+                                    --add_vel_perturb_range 0.5 \
+                                    --se3_events \
+                                    -- polarity_input \
+                                    --polarity_noise_range 0.5 
 ```
 For testing run the following
 ```bash
 python3 TLIO-master/src/main_net.py --mode test \
                                     --root_dir local_data/tlio_golden \
-                                    --out_dir models/tlio_o2/test \
-                                    --model_path models/tlio_o2/checkpoint_best.pt\
-                                    --arch eq_o2_frame_fullCov_2vec_2deep
-``` -->
+                                    --out_dir models/tlio_ev_se3p/nn_test \
+                                    --model_path models/tlio_ev_se3p/checkpoint_best.pt\
+                                    --arch resnet \
+                                    --test_list test_list.txt\
+                                    --input_dim 12 \
+                                    --event_based_input \
+                                    --contrast_threshold 0.01 \
+                                    --se3_events \
+                                    --polarity_input
+
+```
 ### Running the EKF
 To run the EKF run ```TLIO-master/src/main_filter.py``` . Please refer to the source code for the full list of command line arguments. 
     
-<!-- ```bash
+```bash
 python3 TLIO-master/src/main_filter.py --root_dir local_data/tlio_golden \
-                                       --out_dir models/tlio_o2/ekf_test \
-                                       --model_path models/tlio_o2/checkpoint_best.pt \
-                                       --model_param_path models/tlio_o2/parameters.json
-``` -->
+                                       --out_dir models/tlio_ev_se3p/ekf_test \
+                                       --model_path models/tlio_ev_se3p/checkpoint_best.pt \
+                                       --model_param_path models/tlio_ev_se3p/parameters.json \
+                                       --event_based_input \
+                                       --polarity_input \
+                                       --contrast_threshold 0.01 \
+                                       --se3_events
+```
 ### Calculating metrics
 To generate the NN metrics run ```src/analysis/NN_output_metrics.py``` 
 
-<!-- ```bash
-python3 TLIO-master/src/analysis/NN_output_metrics.py --files models/tlio_o2/test\
+```bash
+python3 TLIO/src/analysis/NN_output_metrics.py --files models/tlio_ev_se3p/nn_test\
                                        --output_file_name tlio_nn_results 
 ```
 and for EKF metrics run ```src/analysis/EKF_output_metrics.py```
 
 ```bash
-python3 TLIO-master/src/analysis/EKF_output_metrics.py --files models/tlio_o2/ekf_test\
-                                       --ground_truth_path local_data/tlio_golden\
+python3 TLIO/src/analysis/EKF_output_metrics.py --files models/tlio_ev_se3p/ekf_output \
+                                       --ground_truth_path local_data/tlio_golden \
                                        --output_file_name tlio_ekf_results 
-``` -->
+```
 ---
 
 ## RONIN Architecture
@@ -168,29 +190,36 @@ We show the benefits of our framework applied to this end-to-end Neural Network 
 3. OXOID Dataset: [Download Here](http://deepio.cs.ox.ac.uk/)
 
 ### Pretrained Models
-1. RoNIN + Events ($SE(3)$ + polarity): [Download Here]()
+1. RoNIN + Events ( $SE(3)$ + polarity): [Download Here]()
 
 ### Training and Testing
 
 Download the dataset and the pre-trained models. 
 To train/test **RoNIN ResNet** model run ```source/ronin_resnet.py``` with mode argument. Please refer to the source code for the full list of command line arguments. 
 
-<!-- ```bash
+```bash
 python3 ronin_resnet.py --mode train \
                         --train_list lists/list_train.txt \
                         --val_list lists/list_val.txt \
                         --step_size 10 \
                         --root_dir ronin_data/all_data \
-                        --out_dir output/ronin_o2 \
-                        --arch resnet18_eq_frame_o2
-``` -->
+                        --cache_path ev_data/ronin_ev_se3p \
+                        --out_dir ev_output/ronin_ev_se3p \
+                        --arch resnet18 \
+                        --contrast_threshold 0.1 \
+                        --add_vel_perturb_range 0.5 \
+                        --polarity_noise_range 0.5 \
+                        --batch_size 128
+                        --epochs 120
+```
 and for testing run
 
-<!-- ```bash
+```bash
 python3 ronin_resnet.py --mode test \
                         --test_list lists/list_test_unseen.txt \
                         --root_dir ronin_data/all_data \
-                        --out_dir output/ronin_o2/test_unseen \
-                        --arch resnet18_eq_frame_o2
-                        --model_path output/ronin_o2/checkpoints/checkpoint_38.pt
-``` -->
+                        --out_dir ev_output/ronin_ev_se3p/test_ronin_unseen \
+                        --arch resnet18
+                        --model_path ev_output/ronin_ev_se3p/checkpoints/checkpoint_last.pt \
+                        --contrast_threshold 0.1
+```
