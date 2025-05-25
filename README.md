@@ -6,21 +6,23 @@
 
 
 This repository contains code that implements the event generation on $SE(3)$ manifold described in Jayanth et al. RSS'25, and the used dataset.
-<!-- **Paper**: [ICLR 2025](https://openreview.net/forum?id=C8jXEugWkq), [arXiv](https://arxiv.org/abs/2408.06321)  -->
+**Paper**: [RSS 2025](https://www.roboticsproceedings.org/rss21/p143.pdf), [arXiv](https://arxiv.org/abs/2505.09780) 
 
 Please cite the following paper if you use the code or paper:  
 
 Royina Karegoudra Jayanth, Yinshuang Xu, Evangelos Chatzipantazis, Kostas Daniilidis, Daniel Gehrig,"Neural Inertial Odometry from Lie Events", RSS, 2025.
 
-<!-- ```bibtex
-@InProceedings{Jayanth25iclr,
-   title      = {Eq{NIO}: Subequivariant Neural Inertial Odometry},
-   author     = {Royina Karegoudra Jayanth and Yinshuang Xu and Daniel Gehrig and Ziyun Wang and Evangelos Chatzipantazis and Kostas Daniilidis},
-   booktitle  = {The Thirteenth International Conference on Learning Representations},
-   year       = {2025},
-   url        = {https://openreview.net/forum?id=C8jXEugWkq}
+```bibtex
+@misc{jayanth2025neuralinertialodometrylie,
+      title={Neural Inertial Odometry from Lie Events}, 
+      author={Royina Karegoudra Jayanth and Yinshuang Xu and Evangelos Chatzipantazis and Kostas Daniilidis and Daniel Gehrig},
+      year={2025},
+      eprint={2505.09780},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2505.09780}, 
 }
-``` -->
+```
 
 ---
 ## Cloning the repository
